@@ -2,8 +2,6 @@ package ca.ualberta.cs.picposter.model;
 
 import java.util.Date;
 
-import android.graphics.Bitmap;
-
 /**
  * Represents a single Pic Post, which includes a picture, some text, and a timestamp.
  * @author zjullion

@@ -1,10 +1,17 @@
 package ca.ualberta.cs.picposter;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.renderscript.Type;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -12,6 +19,8 @@ import android.widget.ListView;
 import ca.ualberta.cs.picposter.controller.PicPosterController;
 import ca.ualberta.cs.picposter.model.PicPosterModelList;
 import ca.ualberta.cs.picposter.view.PicPostModelAdapter;
+
+import com.google.gson.reflect.TypeToken;
 
 public class PicPosterActivity extends Activity {
 
@@ -65,11 +74,13 @@ public class PicPosterActivity extends Activity {
 
 
 	public void pushPicture(View view) {
+		
 		this.controller.addPicPost(this.currentPicture, this.addPicEditText.getText().toString());
 		this.addPicEditText.setText(null);
 		this.addPicEditText.setHint(R.string.add_pic_edit_text_hint);
 		this.addPicImageView.setImageResource(R.drawable.camera);
 		this.currentPicture = null;
+		
 	}
 
 
@@ -77,8 +88,21 @@ public class PicPosterActivity extends Activity {
 		String searchTerm = this.searchPostsEditText.getText().toString();
 		
 		//TODO : perform search, update model, etc
-		
+		ElasticSearchOperations.SearchPicPost(searchTerm);
 		this.searchPostsEditText.setText(null);
 		this.searchPostsEditText.setHint(R.string.search_posts_edit_text_hint);
+		
+		
+		
+		/*String json = getEntityContent(response);
+
+		Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Recipe>>(){}.getType();
+		ElasticSearchSearchResponse<Recipe> esResponse = gson.fromJson(json, elasticSearchSearchResponseType);
+		System.err.println(esResponse);
+		for (ElasticSearchResponse<Recipe> r : esResponse.getHits()) {
+		Recipe recipe = r.getSource();
+		System.err.println(recipe);
+		}
+		searchRequest.releaseConnection();*/
 	}
 }

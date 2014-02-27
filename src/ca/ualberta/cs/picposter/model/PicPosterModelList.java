@@ -5,7 +5,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import ca.ualberta.cs.picposter.ElasticSearchOperations;
+
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 
 /**
@@ -29,6 +32,8 @@ public class PicPosterModelList {
 		PicPostModel picPost = new PicPostModel(text, timestamp);
 		this.list.add(picPost);
 		this.adapter.notifyDataSetChanged();
+		Log.e("ElasticSearch", "run pushpicmodel");
+		ElasticSearchOperations.pushPicPostModel(picPost);
 	}
 	
 	
